@@ -70,7 +70,7 @@ int main() {
     factorableQuadratics(i, count);
 
     //PRINT
-    printf(count);
+    printf("%d\n", *count);
 
     //FREE
     free(count);
