@@ -2,8 +2,25 @@
 #include <stdlib.h>
 #include <time.h>
 
-__global__ void factorablequadratics_kernel(int* x_d, int i) {
-    int
+__global__ void factorablequadratics_kernel(int* count, int i) {
+    int index = blockDim.x * blockIdx.x + threadIdx.x;
+    int stride = blockDim.x * gridDim.x;
+
+    for (int start = index; start < 2 * i * i * i; start += stride) {
+        int a = (start / ((2 * i + 1) * (2 * i + 1))) - i;
+        int b = ((start / (2 * i + 1)) % (2 * i + 1)) - i;
+        int c = (start % (2 * i + 1)) - i;
+
+        if (a != 0 && b != 0 && c != 0) {
+            int check = b * b - 4 * a * c;
+            if (check >= 0) {
+                int squareRoot = (int)sqrtf(check);
+                if (squareRoot * squareRoot == check) {
+                    atomicAdd(count, 1);
+                }
+            }
+        }
+    }
 }
 
 void factorableQuadratics(int i, int *count) {
@@ -25,8 +42,8 @@ void factorableQuadratics(int i, int *count) {
 
     //Perform computation on GPU
     int numThreadsPerBlock = 512;
-    int numBlocks = (2 * i * i * i + numThreadsPerBlock - 1) / numThreadsPerBlock);
-    factorablequadratics_kernel<<<numBlocks, numThreadsPerBlock>>>(count_id, i);
+    int numBlocks = (2 * i * i * i + numThreadsPerBlock - 1) / numThreadsPerBlock;
+    factorablequadratics_kernel<<<numBlocks, numThreadsPerBlock>>>(count_d, i);
 
     //Synchronize
     cudaDeviceSynchronize();
@@ -51,6 +68,9 @@ int main() {
 
     //PERFORM FACTORABLE QUADRATICS
     factorableQuadratics(i, count);
+
+    //PRINT
+    printf(count);
 
     //FREE
     free(count);
