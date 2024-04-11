@@ -26,7 +26,7 @@ void readFile(char* filename, int *freqLetters) {
 
 void printA(int freqLetters[]) {
     for (int i = 0; i < 26; i++) {
-        printf("%d ", freqLetters[i]);
+        printf("%d ", i, " ", freqLetters[i]);
     }
 }
 
