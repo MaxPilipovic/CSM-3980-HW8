@@ -30,6 +30,23 @@ void printA(int freqLetters[]) {
     }
 }
 
+void printR(int letterFreq[]) {
+    for (int i = 0; i < 26 - 1; i++) {
+        int min = i;
+        for (int j = i + 1; j < 26; j++) {
+            if (letterFreq[j] < letterFreq[min])
+                min = j;
+        }
+        if (min != i) {
+            swap(letterFreq[min], letterFreqLetters[i]);
+        }
+    }
+    for (int x = 0; x < 26; x++) {
+        printf("%c - %d ", 'A' + i, freqLetters[i]);
+    }
+
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("Giv me file name");
@@ -39,8 +56,14 @@ int main(int argc, char *argv[]) {
     //int N;
     int letterFreq[26];
     readFile(argv[1], letterFreq);
+
     printf("Printing frequencies in alphabetical order\n");
     printA(letterFreq);
+
+    printf("\n");
+
+    printf("Printing frequencies in rank order\n");
+    printR(letterFreq);
 
     return 0;
 }
