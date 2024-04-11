@@ -9,7 +9,7 @@ void readFile(char* filename, int *freqLetters) {
     FILE* read = fopen(filename, "r");
     if(read != NULL) {
         for (int i = 0; i < 26; i++) {
-            freqLetters[0];
+            freqLetters[i] = 0;
         }
         while ((ch = fgetc(read)) != EOF) {
             ch = toupper(ch);
@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
 
     //int N;
     int letterFreq[26];
-    readFile(argv[1], freqLetters);
+    readFile(argv[1], letterFreq);
     printf("Printing frequencies in alphabetical order\n");
     printA(letterFreq);
 
