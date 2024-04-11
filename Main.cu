@@ -36,7 +36,7 @@ int main(int argc, char *argv[]) {
         return 0;
     }
 
-    //int n;
+    //int N;
     int letterFreq[26];
     readFile(argv[1], freqLetters);
     printf("Printing frequencies in alphabetical order\n");
