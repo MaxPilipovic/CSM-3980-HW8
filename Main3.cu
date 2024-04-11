@@ -8,11 +8,11 @@ __global__ void factorablequadratics_kernel(int* count, int i) {
 
     for (int start = index; start < 2 * i * i * i; start += stride) {
         int a = (start / ((2 * i + 1) * (2 * i + 1))) + 1;
-        printf("A VALUE %d\n", a);
+        //printf("A VALUE %d\n", a);
         int b = ((start / (2 * i + 1)) % (2 * i + 1)) - i;
-        printf("B VALUE %d\n", b);
+        //printf("B VALUE %d\n", b);
         int c = (start % (2 * i + 1)) - i;
-        printf("C VALUE %d\n", c);
+        //printf("C VALUE %d\n", c);
         
         if (a != 0 && b != 0 && c != 0) {
             int check = b * b - 4 * a * c;
