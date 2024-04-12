@@ -33,7 +33,7 @@ void printA(int freqLetters[]) {
 
 void printR(int letterFreq[]) {
     for (int i = 0; i < 26; i ++) {
-        letters[i] = 'A' + i;
+        letter[i] = 'A' + i;
     }
     for (int j = 0; j < 26 - 1; j++) {
         int max = j;
@@ -41,13 +41,13 @@ void printR(int letterFreq[]) {
             if (letterFreq[z] > letterFreq[max])
                 max = z;
         }
-        if (max != i) {
-            int temp = letterFreq[i];
-            letterFreq[i] = letterFreq[max];
+        if (max != j) {
+            int temp = letterFreq[j];
+            letterFreq[j] = letterFreq[max];
             letterFreq[max] = temp;
 
-            char temp2 = letter[i];
-            letter[i] = letter[max];
+            char temp2 = letter[j];
+            letter[j] = letter[max];
             letter[max] = temp;
         }
     }
