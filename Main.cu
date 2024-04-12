@@ -32,6 +32,7 @@ void printA(int freqLetters[]) {
 
 void printR(int letterFreq[]) {
     //Keep track of ascii values
+    char letter[26];
     for (int i = 0; i < 26; i++) {
         letter[i] = 'A' + i;
     }
