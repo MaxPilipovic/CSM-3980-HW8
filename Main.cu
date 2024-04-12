@@ -45,10 +45,6 @@ void printR(int letterFreq[]) {
             int temp = letterFreq[j];
             letterFreq[j] = letterFreq[max];
             letterFreq[max] = temp;
-
-            char temp2 = letter[j];
-            letter[j] = letter[max];
-            letter[max] = temp;
         }
     }
     for (int x = 0; x < 26; x++) {
