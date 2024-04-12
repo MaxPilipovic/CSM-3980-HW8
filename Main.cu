@@ -25,15 +25,15 @@ void readFile(char* filename, int *freqLetters) {
 }
 
 void printA(int freqLetters[]) {
-    char letter[26];
     for (int i = 0; i < 26; i++) {
         printf("%c - %d ", 'A' + i, freqLetters[i]);
     }
 }
 
 void printR(int letterFreq[]) {
+    char letter[26];
     for (int i = 0; i < 26; i ++) {
-        letter[i] = 'A' + i;
+        letterFreq[i] = 'A' + i;
     }
     for (int j = 0; j < 26 - 1; j++) {
         int max = j;
