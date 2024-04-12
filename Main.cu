@@ -38,7 +38,7 @@ void printR(int letterFreq[]) {
                 max = j;
         }
         if (max != i) {
-            letterFreq[max] = letterFreq[i]);
+            letterFreq[max] = letterFreq[i];
         }
     }
     for (int x = 0; x < 26; x++) {
