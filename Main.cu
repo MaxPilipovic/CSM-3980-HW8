@@ -34,7 +34,7 @@ void printR(int letterFreq[]) {
     for (int i = 0; i < 26 - 1; i++) {
         int max = i;
         for (int j = i + 1; j < 26; j++) {
-            if (letterFreq[j] > letterFreq[min])
+            if (letterFreq[j] > letterFreq[max])
                 max = j;
         }
         if (max != i) {
@@ -42,7 +42,7 @@ void printR(int letterFreq[]) {
         }
     }
     for (int x = 0; x < 26; x++) {
-        printf("%c - %d ", 'A' + x, freqLetters[x]);
+        printf("%c - %d ", 'A' + x, letterFreq[x]);
     }
 }
 
