@@ -37,6 +37,7 @@ void printR(int letterFreq[]) {
         letter[i] = 'A' + i;
     }
 
+    //Selection sort
     for (int j = 0; j < 26 - 1; j++) {
         int max = j;
         for (int z = j + 1; z < 26; z++) {
@@ -70,8 +71,8 @@ int main(int argc, char *argv[]) {
     int letterFreq[26];
     readFile(argv[1], letterFreq);
 
-    //printf("Printing frequencies in alphabetical order\n");
-    //printA(letterFreq);
+    printf("Printing frequencies in alphabetical order\n");
+    printA(letterFreq);
 
     printf("\n");
 
