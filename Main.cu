@@ -31,6 +31,11 @@ void printA(int freqLetters[]) {
 }
 
 void printR(int letterFreq[]) {
+    //Keep track of ascii values
+    for (int i = 0; i < 26; i++) {
+        letter[i] = 'A' + i;
+    }
+
     for (int j = 0; j < 26 - 1; j++) {
         int max = j;
         for (int z = j + 1; z < 26; z++) {
@@ -38,13 +43,19 @@ void printR(int letterFreq[]) {
                 max = z;
         }
         if (max != j) {
+            //Swap numbers
             int temp = letterFreq[j];
             letterFreq[j] = letterFreq[max];
             letterFreq[max] = temp;
+
+            //Swap ascii values to
+            int temp2 = letter[j];
+            letter[j] = letter[max];
+            letter[max] = temp;
         }
     }
     for (int x = 0; x < 26; x++) {
-        printf("%c - %d ", 'A' + x, letterFreq[x]);
+        printf("%c - %d ", letter[x], letterFreq[x]);
     }
 }
 
