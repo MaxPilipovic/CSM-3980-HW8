@@ -31,7 +31,6 @@ void printA(int freqLetters[]) {
 }
 
 void printR(int letterFreq[]) {
-    char letter[26];
     for (int i = 0; i < 26; i ++) {
         letterFreq[i] = 'A' + i;
     }
