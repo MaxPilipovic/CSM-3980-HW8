@@ -20,7 +20,7 @@ void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramF
         if (size[i] >= 'A' && size[i] <= 'Z') {
             letterFreq[size[i] - 'A']++;
         } else if ((size[i] >= 'a' && size[i] <= 'z')) {
-            letterFreq[size[i] - 'a']++;\
+            letterFreq[size[i] - 'a']++;
         }
     }
 
@@ -87,7 +87,7 @@ void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramF
      for(int index = 0; index < 26; index++) {
          printf("%c : %5d : %5d : %5d\n",
                 (char)('A' + index),
-                result[index]);
+                letterFreq[index]);
      }
 
      //Print digram frequencies
