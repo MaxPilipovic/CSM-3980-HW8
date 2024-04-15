@@ -113,7 +113,7 @@ int main(int argc, const char* argv[])
     {
         printf("%c : %5d : %5d : %5d\n",
                (char)('A' + index),
-               result[index],
+               result[index];
     }
 
     // Clean up
