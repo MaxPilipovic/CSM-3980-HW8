@@ -5,47 +5,31 @@
 void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramFreq, int* trigramFreq, int size) {
     for (int i = 0; i < 26; i++) {
         letterFreq[i] = 0;
-    }
-
-    for (int j = 0; j < 26*26; j++) {
-        digramFreq[j] = 0;
-    }
-
-    for (int k = 0; k < 26*26*26; k++) {
-        trigramFreq[k] = 0;
-    }
-
-    //Counts letter frequencies
-    for (int i = 0; i < size i++) {
-        if (size[i] >= 'A' && size[i] <= 'Z') {
-            letterFreq[size[i] - 'A']++;
-        } else if ((size[i] >= 'a' && size[i] <= 'z')) {
-            letterFreq[size[i] - 'a']++;
-        }
-    }
-
-    //Counts digram frequencies
-    for (int i = 0; i < size i++) {
-        if (i + 1 < size) {
-            if (size[i + 1] >= 'A' && size[i + 1] <= 'Z') {
-                digramFreq[size[i + 1] - 'A']++;
-            } else if ((size[i + 1] >= 'a' && size[i + 1] <= 'z')) {
-                digramFreq[size[i + 1] - 'a']++;
+        for (int j = 0; j < 26; j++) {
+            digramFreq[i][j] = 0;
+            for (int k = 0; k < 26; k++) {
+                trigramFreq[i][j][k] = 0;
             }
         }
     }
 
-    //Counts trigram frequencies
-    for (int i = 0; i < size i++) {
-        if (i + 2 < size) {
-            if (size[i + 2] >= 'A' && size[i + 2] <= 'Z') {
-                trigramFreq[size[i + 2] - 'A']++;
-            } else if ((size[i + 2] >= 'a' && size[i + 2] <= 'z')) {
-                trigramFreq[size[i + 2] - 'a']++;
+    for (i = 0; i < size; i++) {
+        if (isalpha(hostData[i])) {
+            int value = tolower(hostData[i]) - 'a';
+            letterFreq++;
+
+            if (i + 1 < size && isalpha(hostData[i + 1])) {
+                int value2 = tolower(hostData[i + 1]) - 'a';
+                digramFreq[value][value2]++;
+            }
+
+            if (i + 2 < size; isaplha(hostData[i + 2])) {
+                int value2 = tolower(hostData[i + 1]) - 'a';
+                int value3 = tolower(hostData[i + 2]) - 'a';
+                trigramFreq[value][value1][value2];
             }
         }
     }
-
 }
 
 
