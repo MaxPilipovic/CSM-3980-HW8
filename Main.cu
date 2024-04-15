@@ -2,129 +2,98 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
-
-void readFile(char* filename, int *letterFreq), int *digramFreq, int *trigramFreq) {
-    char ch;
-    char prev;
-    char prev2;
-
-    FILE* read = fopen(filename, "r");
-    if(read != NULL) {
-        for (int i = 0; i < 26; i++) {
-            letterFreq[i] = 0;
-            int (j = 0; j < 26; j++) {
-                digramFreq[i][j];
-                int (k = 0; k < 26; k++) {
-                    trigramFreq[i][j][k];
-                }
-            }
-        }
-        while ((ch = fgetc(read)) != EOF) {
-            ch = toupper(ch);
-            if (ch >= 'A' && ch <= 'Z') {
-                letterFreq[ch - 'A']++;
-                if (prev >= 'A' && prev <= 'Z') {
-                    digramFreq[prev - 'A'][ch - 'A']++;
-                    if (prev2 >= 'A' && prev2 <= 'Z') {
-                        trigramFreq[prev2 - 'A'][prev - 'A'][ch - 'A'];
-                    }
-                }
-            }
-        }
-        fclose(read);
-    } else {
-        printf("Nothing in file");
-        exit(1);
-    }
-}
-
-void printA(int letterFreq[]) {
+void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramFreq, int* trigramFreq, int size) {
     for (int i = 0; i < 26; i++) {
-        printf("%c - %d ", 'A' + i, letterFreq[i]);
-    }
-}
-
-void printR(int letterFreq[]) {
-    //Keep track of ascii values
-    char letter[26];
-    for (int i = 0; i < 26; i++) {
-        letter[i] = 'A' + i;
+        letterFreq[i] = 0;
     }
 
-    //Selection sort
-    for (int j = 0; j < 26 - 1; j++) {
-        int max = j;
-        for (int z = j + 1; z < 26; z++) {
-            if (letterFreq[z] > letterFreq[max])
-                max = z;
-        }
-        if (max != j) {
-            //Swap numbers
-            int temp = letterFreq[j];
-            letterFreq[j] = letterFreq[max];
-            letterFreq[max] = temp;
+    for (int j = 0; j < 26*26; j++) {
+        digramFreq[j] = 0;
+    }
 
-            //Swap ascii values to
-            int temp2 = letter[j];
-            letter[j] = letter[max];
-            letter[max] = temp;
+    for (int k = 0; k < 26*26*26; k++) {
+        trigramFreq[k] = 0;
+    }
+
+    //Counts letter frequencies
+    for (int i = 0; i < size i++) {
+        if (size[i] >= 'A' && size[i] <= 'Z') {
+            letterFreq[size[i] - 'A']++;
+        } else if ((size[i] >= 'a' && size[i] <= 'z')) {
+            letterFreq[size[i] - 'a']++;\
         }
     }
-    for (int x = 0; x < 26; x++) {
-        printf("%c - %d ", letter[x], letterFreq[x]);
-    }
-}
 
-void printD(int letterFreq) {
-    if (i = 0; i < 26; i++) {
-        if (j = 0; j < 26; j++) {
-            if (digramFreq > 0) {
-                printf("%c - %d ",'A' - i, 'A' - j, digramFreq[i][j]);
+    //Counts digram frequencies
+    for (int i = 0; i < size i++) {
+        if (i + 1 < size) {
+            if (size[i + 1] >= 'A' && size[i + 1] <= 'Z') {
+                digramFreq[size[i + 1] - 'A']++;
+            } else if ((size[i + 1] >= 'a' && size[i + 1] <= 'z')) {
+                digramFreq[size[i + 1] - 'a']++;
             }
         }
     }
-}
 
-void printT(int letterFreq) {
-    if (i = 0; i < 26; i++) {
-        if (j = 0; j < 26; j++) {
-            if (k = 0; k < 26; k++) {
-                if (trigramFreq > 0) {
-                    printf("%c - %d ",'A' - i, 'A' - j, 'A' - k, trigramFreq[i][j][k]);
-                }
+    //Counts trigram frequencies
+    for (int i = 0; i < size i++) {
+        if (i + 2 < size) {
+            if (size[i + 2] >= 'A' && size[i + 2] <= 'Z') {
+                trigramFreq[size[i + 2] - 'A']++;
+            } else if ((size[i + 2] >= 'a' && size[i + 2] <= 'z')) {
+                trigramFreq[size[i + 2] - 'a']++;
             }
         }
     }
+
 }
 
-int main(int argc, char *argv[]) {
+
+ int main(int argc, char *argv[]) {
     if (argc < 2) {
         printf("Giv me file name");
-        return 0;
+        return 1;
     }
 
-    //int N;
-    int letterFreq[26];
-    int digramFreq[26][26];
-    int trigramFreq[26][26][26]
-    ;
-    readFile(argv[1], letterFreq);
+     // Open file
+     FILE *file = fopen(argv[1], "r");
+     if(!file) {
+         fprintf(stderr, "Unable to open %s!\n", argv[1]);
+         return 2;
+     }
 
-    printf("Printing frequencies in alphabetical order\n");
-    printA(letterFreq);
-    printf("-----\n");
+     //Find file size
+     fseek(file, 0, SEEK_END);
+     long size = ftell(file);
+     fseek(file, 0, SEEK_SET);
 
-    printf("Printing frequencies in rank order\n");
-    printR(letterFreq);
-    printf("-----\n");
+     // Arrays to hold our data on the host and gpu
+     unsigned char *hostData = (unsigned char*) malloc((size + 1) * sizeof(char));
 
-    printf("Digram frequencies\n");
-    printD(letterFreq);
-    printf("-----\n");
+     //Read
+     printf("Reading %s\n", argv[1]);
+     fread(hostData, size, 1, file);
+     fclose(file);
+     hostData[size] = '\0';
 
-    printf("Trigram frequencies\n");
-    printT(letterFreq);
-    printf("-----\n");
+     //Hold Data
+     int letterFreq[26];
+     int digramFreq[26][26];
+     int trigramFreq[26][26][26];
 
-    return 0;
+     textfrequencycounter(hostData, letterFreq, digramFreq, trigramFreq, size);
+
+     //Print letter frequencies
+     for(int index = 0; index < 26; index++) {
+         printf("%c : %5d : %5d : %5d\n",
+                (char)('A' + index),
+                result[index]);
+     }
+
+     //Print digram frequencies
+
+     //Print trigram frequencies
+
+
+
 }
