@@ -26,7 +26,7 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
             if (i + 2 < size && isalpha(hostData[i + 2])) {
                 int value2 = tolower(hostData[i + 1]) - 'a';
                 int value3 = tolower(hostData[i + 2]) - 'a';
-                trigramfreq[value][value2][value3]++;
+                trigramFreq[value][value2][value3]++;
             }
         }
     }
