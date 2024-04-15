@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
-void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramFreq, int* trigramFreq, int size) {
+void textfrequencycounter(unsigned char* hostData, int* letterFreq, (int (*)[26])digramFreq, (int (*)[26][26])trigramFreq, int size) {
     for (int i = 0; i < 26; i++) {
         letterFreq[i] = 0;
         for (int j = 0; j < 26; j++) {
@@ -65,7 +65,7 @@ void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramF
      int digramFreq[26][26];
      int trigramFreq[26][26][26];
 
-     textfrequencycounter(hostData, letterFreq, (int (*)[26])digramFreq, (int (*)[26][26]) trigramFreq, size);
+     textfrequencycounter(hostData, letterFreq, digramFreq, trigramFreq, size);
 
      //Print letter frequencies
      for(int index = 0; index < 26; index++) {
