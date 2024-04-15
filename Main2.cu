@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-__global__ void textfrequencycounter_kernel() {
+__global__ void textfrequencycounter_kernel(unsigned char* s, int* result, int n) {
     // Private copies of the result for each block
     __shared__ int privateResult[26];
 
