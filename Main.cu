@@ -13,7 +13,7 @@ void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramF
         }
     }
 
-    for (i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++) {
         if (isalpha(hostData[i])) {
             int value = tolower(hostData[i]) - 'a';
             letterFreq[value]++;
@@ -23,7 +23,7 @@ void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramF
                 digramFreq[value][value2]++;
             }
 
-            if (i + 2 < size; isalpha(hostData[i + 2])) {
+            if (i + 2 < size && isalpha(hostData[i + 2])) {
                 int value2 = tolower(hostData[i + 1]) - 'a';
                 int value3 = tolower(hostData[i + 2]) - 'a';
                 trigramFreq[value][value2][value3];
@@ -65,7 +65,7 @@ void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramF
      int digramFreq[26][26];
      int trigramFreq[26][26][26];
 
-     textfrequencycounter(hostData, letterFreq, digramFreq, trigramFreq, size);
+     textfrequencycounter(hostData, letterFreq, (int (*)[26])digramFreq, (int (*)[26][26]) trigramFreq, size);
 
      //Print letter frequencies
      for(int index = 0; index < 26; index++) {
