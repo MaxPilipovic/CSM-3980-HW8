@@ -68,16 +68,32 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
      textfrequencycounter(hostData, size, letterFreq, digramFreq, trigramFreq);
 
      //Print letter frequencies
-     for(int index = 0; index < 26; index++) {
+     for(int i = 0; i < 26; i++) {
          printf("%c : %5d : %5d : %5d\n",
-                (char)('A' + index),
-                letterFreq[index]);
+                (char)('A' + i),
+                letterFreq[i]);
      }
 
      //Print digram frequencies
+     for (int i = 0; i < 26; i++) {
+         for (int j = 0; j < 26; j++) {
+             printf("%c : %5d : %5d : %5d\n",
+                    (char)('A' + i),
+                    (char)('A' + j),
+                    digramFreq[i][j]);
+         }
+     }
 
      //Print trigram frequencies
-
-
-
+     for (int i = 0; i < 26; i++) {
+         for (int j = 0; j < 26; j++) {
+             for (int k = 0; k < 26; k++) {
+                 printf("%c : %5d : %5d : %5d\n",
+                        (char)('A' + i),
+                        (char)('A' + j),
+                        (char)('A' + k),
+                        digramFreq[i][j][k]);
+             }
+         }
+     }
 }
