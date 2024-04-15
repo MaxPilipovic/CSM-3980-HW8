@@ -94,7 +94,7 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
          for (int j = 0; j < 26; j++) {
              for (int k = 0; k < 26; k++) {
                  if (trigramFreq[i][j][k] > 0) {
-                     printf("%c : %5d : %5d : %5d\n",
+                     printf("%c%c%c : %5d\n",
                             (char)('A' + i),
                             (char)('A' + j),
                             (char)('A' + k),
