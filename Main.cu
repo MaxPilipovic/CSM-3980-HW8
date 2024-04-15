@@ -92,7 +92,7 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
                         (char)('A' + i),
                         (char)('A' + j),
                         (char)('A' + k),
-                        digramFreq[i][j][k]);
+                        trigramFreq[i][j][k]);
              }
          }
      }
