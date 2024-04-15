@@ -16,17 +16,17 @@ void textfrequencycounter(unsigned char* hostData, int* letterFreq, int* digramF
     for (i = 0; i < size; i++) {
         if (isalpha(hostData[i])) {
             int value = tolower(hostData[i]) - 'a';
-            letterFreq++;
+            letterFreq[value]++;
 
             if (i + 1 < size && isalpha(hostData[i + 1])) {
                 int value2 = tolower(hostData[i + 1]) - 'a';
                 digramFreq[value][value2]++;
             }
 
-            if (i + 2 < size; isaplha(hostData[i + 2])) {
+            if (i + 2 < size; isalpha(hostData[i + 2])) {
                 int value2 = tolower(hostData[i + 1]) - 'a';
                 int value3 = tolower(hostData[i + 2]) - 'a';
-                trigramFreq[value][value1][value2];
+                trigramFreq[value][value2][value3];
             }
         }
     }
