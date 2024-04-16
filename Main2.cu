@@ -2,6 +2,70 @@
 #include <stdlib.h>
 #include <time.h>
 
+__global__ void digram_textfrequencycounter_kernel(unsigned char* s, int* result, int n) {
+    //Private copies of the result for each block
+    __shared__ int privateResult[676];
+
+    //Initialize private result
+    if (threadIdx.x < 676) {
+        privateResult[threadIdx.x] = 0;
+    }
+
+    __syncthreads();
+
+    //Get starting location and stride. Striding this way gives
+    //coalesced memory access
+    int i = threadIdx.x + blockIdx.x * blockDim.x;
+    int stride = blockDim.x * gridDim.x;
+
+    while (i < n - 1) {
+        //Handle uppercase
+        int value = s[i] - 'a';
+        int value2 = s[i + 1] - 'a';
+        if (value >= 0 && value < 26 && value2 >= 0 && value2 < 26) {
+            atomicAdd(&(privateResult[value*26 + value2]), 1);
+        }
+        __syncthreads();
+
+        //Store final result
+        if (threadIdx.x < 676) {
+            atomicAdd(&(result[threadIdx.x]), privateResult[threadIdx.x]);
+        }
+    }
+}
+
+__global__ void trigram_textfrequencycounter_kernel(unsigned char* s, int* result, int n) {
+    //Private copies of the result for each block
+    __shared__ int privateResult[17576];
+
+    //Initialize private result
+    if(threadIdx.x < 17576) {
+        privateResult[threadIdx.x] = 0;
+    }
+
+    __syncthreads();
+
+    //Get starting location and stride. Striding this way gives
+    //coalesced memory access
+    int i = threadIdx.x + blockIdx.x * blockDim.x;
+    int stride = blockDim.x * gridDim.x;
+
+    while(i < n - 2) {
+        //Handle uppercase
+        int value = s[i] - 'a';
+        int value2 = s[i + 1] - 'a';
+        int value3 = s[i + 2] - 'a';
+        if(value >= 0 && value < 26 && value2 >= 0 && value2 < 26 && value3 >= 0 && value3 < 26) {
+            atomicAdd(&(privateResult[value*26*26 + value2*26 + value3]), 1);
+        }
+        __syncthreads();
+
+        //Store final result
+        if(threadIdx.x < 17576) {
+            atomicAdd(&(result[threadIdx.x]), privateResult[threadIdx.x]);
+        }
+    }
+
 __global__ void textfrequencycounter_kernel(unsigned char* s, int* result, int n) {
     //Private copies of the result for each block
     __shared__ int privateResult[26];
@@ -75,6 +139,12 @@ int main(int argc, const char* argv[]) {
     int *result;
     cudaMallocManaged(&result, 26*sizeof(int));
 
+    int *digram;
+    int *trigram;
+
+    cudaMallocManaged(&digram, 676*sizeof(int));
+    cudaMallocManaged(&trigram, 17576*sizeof(int));
+
     //Set the size of our grid. Threads must be >= 256.
     int threads = 256;
     int blocks = 80;
@@ -86,12 +156,21 @@ int main(int argc, const char* argv[]) {
     int device = -1;
     cudaGetDevice(&device);
     cudaMemPrefetchAsync(result, 26 * sizeof(int), device);
+    cudaMemPrefetchAsync(digram, 676 * sizeof(int), device);
+    cudaMemPrefetchAsync(trigram, 15576 * sizeof(int), device);
+
 
     //Run histograms
     textfrequencycounter_kernel<<<blocks,threads>>>(gpuData, result, size);
 
+    digram_textfrequencycounter_kernel<<<blocks,threads>>>(gpuData, digram, size);
+
+    trigram_textfrequencycounter_kernel<<<blocks,threads>>>(gpuData, trigram, size);
+
     //Move results back to host
     cudaMemPrefetchAsync(result, 26 * sizeof(int), cudaCpuDeviceId);
+    cudaMemPrefetchAsync(digram, 676 * sizeof(int), cudaCpuDeviceId);
+    cudaMemPrefetchAsync(trigram, 15576 * sizeof(int), cudaCpuDeviceId);
 
     cudaDeviceSynchronize();
 
@@ -106,6 +185,7 @@ int main(int argc, const char* argv[]) {
     free(hostData);
     cudaFree(gpuData);
     cudaFree(result);
-
+    cudaFree(digram);
+    cudaFree(trigram);
     return 0;
 }
