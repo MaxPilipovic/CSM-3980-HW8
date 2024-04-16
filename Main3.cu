@@ -68,7 +68,7 @@ int main() {
     int i = 10;
     int *count = (int*)malloc(sizeof(int));
 
-    //PERFORM FACTORABLE QUADRATICS
+    //PERFORM FACTORABLE QUADRATICSS
     factorableQuadratics(i, count);
 
     //PRINT
