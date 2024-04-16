@@ -60,13 +60,22 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
      fclose(file);
      hostData[size] = '\0';
 
-     //Hold Data
+     //Data
      int letterFreq[26];
      int digramFreq[26][26];
      int trigramFreq[26][26][26];
 
+     //Start clock
+     clock_t start_t, end_t;
+     double total_t;
+     start_t = clock();
+
      textfrequencycounter(hostData, size, letterFreq, digramFreq, trigramFreq);
 
+     //End clock
+     end_t = clock();
+     total_t = (double)(end_t - start_t) / CLOCKS_PER_SEC;
+     printf("%f\n", total_t);
      /*
      //Print letter frequencies
      for(int i = 0; i < 26; i++) {

@@ -159,6 +159,12 @@ int main(int argc, const char* argv[]) {
     cudaMemPrefetchAsync(digram, 676 * sizeof(int), device);
     cudaMemPrefetchAsync(trigram, 15576 * sizeof(int), device);
 
+    //Start time
+    float time;
+    cudaEvent_t start, stop;
+    cudaEventCreate(&start);
+    cudaEventCreate(&stop);
+    cudaEventRecord(start, 0);
 
     //Run histograms
     textfrequencycounter_kernel<<<blocks,threads>>>(gpuData, result, size);
@@ -166,6 +172,12 @@ int main(int argc, const char* argv[]) {
     digram_textfrequencycounter_kernel<<<blocks,threads>>>(gpuData, digram, size);
 
     trigram_textfrequencycounter_kernel<<<blocks,threads>>>(gpuData, trigram, size);
+
+    //End time
+    cudaEventRecord(stop, 0);
+    cudaEventSynchronize(stop);
+    cudaEventElapsedTime(&time, start, stop);
+    printf("%f\n", time);
 
     //Move results back to host
     cudaMemPrefetchAsync(result, 26 * sizeof(int), cudaCpuDeviceId);
