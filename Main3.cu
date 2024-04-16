@@ -64,7 +64,6 @@ void factorableQuadratics(int i, int *count) {
     cudaFree(count_d);
 }
 
-
 int main() {
     int i = 2;
     int *count = (int*)malloc(sizeof(int));
