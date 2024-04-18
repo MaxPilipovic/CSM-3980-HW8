@@ -79,8 +79,6 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
                 letterFreq[i]);
      }
 
-
-
      //Print digram frequencies
      for (int i = 0; i < 26; i++) {
          for (int j = 0; j < 26; j++) {
@@ -92,8 +90,6 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
              }
          }
      }
-
-
 
      //Print trigram frequencies
      for (int i = 0; i < 26; i++) {
