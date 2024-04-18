@@ -6,6 +6,7 @@ __global__ void factorablequadratics_kernel(int* count, int i) {
     int index = blockDim.x * blockIdx.x + threadIdx.x;
     int stride = blockDim.x * gridDim.x;
 
+    //Stride
     for (int start = index; start < 2 * i * i * i; start += stride) {
         int a = (start / ((2 * i + 1) * (2 * i + 1)));
         //printf("A VALUE %d\n", a);

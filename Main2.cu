@@ -13,6 +13,7 @@ __global__ void digram_textfrequencycounter_kernel(unsigned char* s, int* result
 
     __syncthreads();
 
+    //Stride
     //Get starting location and stride. Striding this way gives
     //coalesced memory access
     int i = threadIdx.x + blockIdx.x * blockDim.x;

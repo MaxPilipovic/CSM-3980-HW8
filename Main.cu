@@ -13,6 +13,7 @@ void textfrequencycounter(unsigned char* hostData, int size, int* letterFreq, in
         }
     }
 
+    //HERE
     for (int i = 0; i < size; i++) {
         if (isalpha(hostData[i])) {
             int value = tolower(hostData[i]) - 'a';
